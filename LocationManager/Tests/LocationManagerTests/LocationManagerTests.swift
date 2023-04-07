@@ -10,7 +10,7 @@ import XCTest
 import CoreLocation
 
 class SystemLocationManagerDecoratorTests: XCTestCase {
-    var sut: SystemLocationManagerDecorator!
+    var sut: LocationManager!
     var locationManager: MockCLLocationManager!
     var locationPolicy: MockLocationPolicy!
 
@@ -18,7 +18,7 @@ class SystemLocationManagerDecoratorTests: XCTestCase {
         super.setUp()
         locationManager = MockCLLocationManager()
         locationPolicy = MockLocationPolicy(validFor: 10)
-        sut = SystemLocationManagerDecorator(locationPolicy: locationPolicy, locationManager: locationManager)
+        sut = LocationManager(locationPolicy: locationPolicy, locationManager: locationManager)
     }
 
     override func tearDown() {

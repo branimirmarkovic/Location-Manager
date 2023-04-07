@@ -9,7 +9,7 @@ import CoreLocation
 
 public typealias LocationResult = Result<CLLocation, Error>
 
-public class SystemLocationManagerDecorator: NSObject {
+public class LocationManager: NSObject {
     private var locationManager: CLLocationManager
     private var locationCompletionHandlers: [((Result<CLLocation,Error>) -> Void)] = []
 
@@ -51,7 +51,7 @@ public class SystemLocationManagerDecorator: NSObject {
 
 }
 
-extension SystemLocationManagerDecorator: CLLocationManagerDelegate {
+extension LocationManager: CLLocationManagerDelegate {
     
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else {
