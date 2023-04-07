@@ -7,7 +7,9 @@
 
 import CoreLocation
 
-class SystemLocationManagerDecorator: NSObject, LocationManager {
+public typealias LocationResult = Result<CLLocation, Error>
+
+public class SystemLocationManagerDecorator: NSObject {
     private var locationManager: CLLocationManager
     private var locationCompletionHandlers: [((Result<CLLocation,Error>) -> Void)] = []
 
@@ -15,14 +17,14 @@ class SystemLocationManagerDecorator: NSObject, LocationManager {
 
     private var lastLocation: SavedLocation?
 
-    init(locationPolicy: LocationPolicy,
+    public init(locationPolicy: LocationPolicy,
          locationManager: CLLocationManager ) {
         self.locationPolicy = locationPolicy
         self.locationManager = locationManager
         super.init()
     }
 
-    func currentLocation(completion: @escaping (Result<CLLocation, Error>) -> Void) {
+    public func currentLocation(completion: @escaping (Result<CLLocation, Error>) -> Void) {
         if let lastLocation = lastLocation, locationPolicy.isLocationValid(lastLocation) {
             completion(.success(lastLocation.location))
         } else {
@@ -51,7 +53,7 @@ class SystemLocationManagerDecorator: NSObject, LocationManager {
 
 extension SystemLocationManagerDecorator: CLLocationManagerDelegate {
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else {
             didComplete(result: .failure(NSError(domain: "No locations", code: 0, userInfo: nil)))
             return}
@@ -59,7 +61,7 @@ extension SystemLocationManagerDecorator: CLLocationManagerDelegate {
         didComplete(result: .success(location))
 
     }
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         didComplete(result: .failure(error))
     }
 

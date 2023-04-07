@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-struct SavedLocation {
+public struct SavedLocation {
     let timeStamp: Date
     let location: CLLocation
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol LocationPolicy {
-    var validFor: TimeInterval {get set}
+public protocol LocationPolicy {
     func isLocationValid(_ savedLocation: SavedLocation) -> Bool
+    init(validFor: TimeInterval)
 }
